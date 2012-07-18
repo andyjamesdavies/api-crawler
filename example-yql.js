@@ -1,4 +1,4 @@
-var request = require('request');
+var YQL = require('yql');
 var JSONPath = require('JSONPath').eval;
 var fs = require('fs');
 
@@ -115,36 +115,35 @@ var buildChildEndpoints = function (response, args) {
 };
 
 //executes yql query
-var executeQuery = function (args) {
+var executeQuery = function (query, args) {
 	console.log('fetching: ' + args.url + "\n");
 
-	request(args.url, function( error, response, body) {
-		if (error) {
-			console.log('ERR: ' + error.message);
-		} else {
-			var filename = appnamespace + '/' + args.filename;
-			body = JSON.parse(body);
-			fs.exists(filename, function(exists) {
-				if (exists) {
-					fs.unlink(filename, function(err) {
-						if (err) {
-							console.log(err);
-						}
-						writeFile(filename, body, args);
-						buildChildEndpoints(body, args);
-					});
-				} else {
-					writeFile(filename, body, args);
-					buildChildEndpoints(body, args);
-				}
-			});
-		}
-	});
+	YQL.exec(query, function(response) {
+		var filename = appnamespace + '/' + args.filename;
+
+		//if file exists, delete it.
+		fs.exists(filename, function(exists) {
+			if (exists) {
+				fs.unlink(filename, function(err) {
+					if (err) {
+						console.log(err);
+					}
+					writeFile(filename, response.query.results.json, args);
+					buildChildEndpoints(response.query.results.json, args);
+				});
+			} else {
+				writeFile(filename, response.query.results.json, args);
+				buildChildEndpoints(response.query.results.json, args);
+			}
+		});
+	}, args);
 };
+
+var query = "SELECT * FROM json WHERE (url = @url)";
 
 //loops through endpointsArr executing yql query.
 if (endpointsArr.length > 0) {
 	for (var i = 0; i < endpointsArr.length; i++) {
-		executeQuery(endpointsArr[i]);
+		executeQuery(query, endpointsArr[i]);
 	}
 }

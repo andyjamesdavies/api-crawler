@@ -1,4 +1,6 @@
-#YQL Crawler for Node.js
+#API Crawler for Node.js
+
+TODO: look at rate limiting
 
 ##Installation
 

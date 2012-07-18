@@ -5,7 +5,14 @@ TODO: look at rate limiting
 ##Installation
 
 	> npm install JSONPath
+
+	> npm install request
+
+	OR
+
 	> npm install yql
+
+BE WARNED: YQL quotes all values in a returned JSON object event null, numbers and boolean values. Not ideal
 
 ##Usage
 

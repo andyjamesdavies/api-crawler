@@ -1,0 +1,15 @@
+{
+  "name": "api-crawler",
+  "preferGlobal": true,
+  "version": "0.1.0",
+  "author": "andyjamesdavies",
+  "description": "a simple crawler for apis / websites",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andyjamesdavies/api-crawler.git"
+  },
+  "dependencies" : {
+    "JSONPath":  "*",
+    "request" :  "*"
+  }
+}

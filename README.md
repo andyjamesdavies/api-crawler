@@ -1,23 +1,21 @@
-#API Crawler for Node.js
+#Crawler for Node.js
 
-TODO: look at rate limiting
+A simple crawler for downloading json / html data into json format.
 
 ##Installation
 
-	> npm install JSONPath
-
-	> npm install request
-
-	OR
-
-	> npm install yql
-
-BE WARNED: YQL quotes all values in a returned JSON object event null, numbers and boolean values. Not ideal
+	> npm install
 
 ##Usage
 
 Basic usage of file, may need to run as sudo:
 	
-	> node example.js
+	> node apiCrawler.js
+	> node websiteCrawler.js
 
-More information on the node-yql module can be found here: https://github.com/derek/node-yql
+
+##ToDo:
+
+- Get child url crawling to work correctly.
+- Refactor code so it is more reusable.
+- Allow the crawler to perform actions, maybe look at using Zombie to do this http://zombie.labnotes.org/
